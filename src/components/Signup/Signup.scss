@@ -1,0 +1,112 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/fonts' as *;
+
+
+.signup{
+        display: flex;
+        justify-content: center;
+        background: linear-gradient(0deg, $form-background 90%, $primary-background 90%);
+
+    &__container{
+        box-shadow: 0 0 4px grey;
+        margin: 0rem 2rem 1rem 2rem;
+        background: $form-background;
+    }
+    
+
+    &__title{
+        margin: 1rem 1rem 1rem 1rem;
+        text-align: center;
+        @include mobile__page-header;
+
+        @include tablet{
+
+            @include tablet__page-header;
+            
+        }
+    }
+
+    &__form{
+        margin: 0 1rem 0 1rem;
+
+        @include tablet{
+            margin: 0 2rem 0 2rem;
+        }
+    }
+
+    &__label{
+        padding-bottom: 1rem;
+        @include mobile__labels-links-buttons;
+
+        @include tablet {
+
+            @include tablet__labels-links-buttons;
+
+        }
+      
+    }
+
+    &__input{
+        box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 1rem;
+        height: 36px;
+        padding: 0 16px 0 16px;
+        margin-top: 4px;
+        border-radius: 20px;
+        border: 1px solid $input-outline;
+        @include mobile__labels-links-buttons;
+
+        @include tablet {
+
+            @include tablet__labels-links-buttons;
+
+        }
+        
+    }
+
+    &__input-error{
+        box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 1rem;
+        height: 36px;
+        padding: 0 16px 0 16px;
+        margin-top: 4px;
+        border-radius: 20px;
+        border: 1px solid $error;
+    }
+
+    &__button{
+        margin-bottom: 1rem;
+        height: 36px;
+        padding: 0 16px;
+        width: 100%;
+        border-radius: 20px;
+        border: none;
+        background-color: $primary-background;
+        color: $form-background;
+        @include mobile__labels-links-buttons;
+
+        &:hover{
+            background-color: $primary-hover;
+        }
+
+        @include tablet {
+
+            @include tablet__labels-links-buttons;
+            
+        }
+    }
+
+    &__login{
+        padding: 0 1rem 1rem 1rem;
+        @include mobile__body-large;
+
+        @include tablet {
+            padding: 0 2rem 1rem 2rem;
+            @include tablet__body-large;
+            
+        }
+    }
+}

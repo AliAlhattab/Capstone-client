@@ -17,10 +17,11 @@
         margin: 0;
         color: white;
         padding-top: 1rem;
-        font-size: 30px;
+        @include mobile__page-header;
         
         @include tablet{
             margin-left: 2rem;
+            @include tablet__page-header
         }
 
         @include desktop{
@@ -36,9 +37,11 @@
         justify-content: space-evenly;
         padding: 0;
         margin-bottom: 0;
+        @include mobile__labels-links-buttons;
 
         @include tablet{
             margin-right: 1rem;
+            @include tablet__labels-links-buttons
         }
 
         @include desktop{
@@ -62,4 +65,6 @@
     &__links{
         text-decoration: none;
     }
+
+
 }

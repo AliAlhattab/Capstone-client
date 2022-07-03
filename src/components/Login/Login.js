@@ -47,38 +47,44 @@ class Login extends Component {
   render() {
     return (
       <section className="login">
-        <h1 className="login__title">Login</h1>
-        <form className="login__form" onSubmit={this.login}>
-          <label className="login__label">Username</label>
-          <input
-            className="login__input"
-            onChange={this.changeHandler}
-            id="username"
-            name="username"
-            type="text"
-            placeholder="Username"
-          />
+        <div className="login__container">
+          <h1 className="login__title">Login</h1>
+          <form className="login__form" onSubmit={this.login}>
+            <label className="login__label">Username</label>
+            <input
+               className={`login__input ${
+                this.state.usernameError ? "login__input-error" : ""
+              }`}
+              onChange={this.changeHandler}
+              id="username"
+              name="username"
+              type="text"
+              placeholder="Username"
+            />
 
-          <label className="login__label">Password</label>
-          <input
-            className="login__input"
-            onChange={this.changeHandler}
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Password"
-          />
+            <label className="login__label">Password</label>
+            <input
+             className={`login__input ${
+              this.state.passwordError ? "login__input-error" : ""
+            }`}
+              onChange={this.changeHandler}
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Password"
+            />
 
-          <button className="login__button">Login</button>
+            <button className="login__button">Login</button>
 
-          {this.state.error && (
-            <div className="login__message">{this.state.error}</div>
-          )}
-          {this.state.success && <Redirect to="/" />}
-        </form>
-        <p>
-          Need an account? <NavLink to="/signup">Sign up</NavLink>
-        </p>
+            {this.state.error && (
+              <div className="login__message">{this.state.error}</div>
+            )}
+            {this.state.success && <Redirect to="/profile" />}
+          </form>
+          <p className="login__signup">
+            Need an account? <NavLink to="/signup">Sign up</NavLink>
+          </p>
+        </div>
       </section>
     );
   }

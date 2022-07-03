@@ -1,0 +1,64 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/fonts' as *;
+
+.getstarted{
+
+    background-color:#adf7ad34;
+    padding-top: 2rem;
+
+    &__title{
+        @include mobile__page-header;
+        color: $primary-background; 
+        text-align: center;
+    }
+
+    &__group{
+        display: flex;
+    }
+
+    &__steps{
+        width: 100%;
+        text-align: center;
+        
+    }
+
+    &__order{
+        color: $primary-background;
+        @include mobile__sub-header;
+    }
+
+    &__text{
+        @include mobile__body-large;
+    }
+
+    &__button{
+        padding: 2rem;
+    }
+
+    &__signup{
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-bottom: 1rem;
+        height: 36px;
+        padding: 0 16px;
+        width: 100%;
+        border-radius: 20px;
+        border: none;
+        background-color: $primary-background;
+        color: $form-background;
+        @include mobile__labels-links-buttons;
+
+        &:hover{
+            background-color: $primary-hover;
+        }
+
+        @include tablet {
+
+            @include tablet__labels-links-buttons;
+            
+        }
+
+    }
+
+}

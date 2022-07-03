@@ -1,0 +1,38 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/fonts' as *;
+
+.hero{
+
+    background-color:#adf7ad34;
+
+    @include tablet{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    &__image{
+        margin: 1rem;
+        width: 90%;
+        
+
+        @include tablet{
+            width: 50%;
+        }
+    }
+
+    &__info{
+        text-align: center
+    }
+
+    &__title{
+        @include mobile__page-header;
+        color: $primary-background;
+        margin: 1rem 1rem 0 1rem;
+
+        @include tablet {
+            @include tablet__page-header;
+        }
+    }
+}
