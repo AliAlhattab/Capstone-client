@@ -1,0 +1,20 @@
+@use '../styles/partials/variables' as *;
+@use '../styles/partials/mixins' as *;
+@use '../styles/partials/fonts' as *;
+
+.postpage{
+
+    background: linear-gradient(0deg, $page-color 90%, $primary-background 90%);
+
+    &__container{
+        box-shadow: 0 0 4px grey;
+        margin: 0rem 2rem 1rem 2rem;
+        background: $form-background;
+        padding: 1rem 0;
+    }
+
+    &__title{
+        margin: 0 1rem 1rem 1rem;
+        @include mobile__page-header
+    }
+}

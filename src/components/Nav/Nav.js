@@ -37,6 +37,9 @@ class Nav extends Component {
 
   logout = () => {
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem('user_id');
+    window.location.reload(true);
+
     this.setState({
       user: null,
       failedAuth: true
@@ -78,6 +81,9 @@ class Nav extends Component {
         <ul className="nav__list">
           <NavLink className="nav__links" to="/profile">
             <li className="nav__options">Profile</li>
+          </NavLink>
+          <NavLink className="nav__links" to="/posts">
+            <li className="nav__options">Posts</li>
           </NavLink>
           <NavLink className="nav__links" to="/">
             <li className="nav__options" onClick={this.logout}>Logout</li>

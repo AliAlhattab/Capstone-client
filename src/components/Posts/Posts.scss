@@ -1,0 +1,52 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/fonts' as *;
+
+.post{
+
+    box-shadow: 0 0 4px grey;
+    margin: 0rem 2rem 1rem 2rem;
+    background: $page-color;
+
+    &__group{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1rem 1rem 0 1rem;
+    }
+
+    &__name{
+        @include mobile__sub-header;
+    }
+
+    &__date{
+        @include mobile__body-medium;
+    }
+
+    &__content{
+        padding: 0 1rem 0 1rem;
+        @include mobile__body-large;
+
+    }
+
+    &__info{
+        margin: 1rem 1rem 0 1rem;
+    }
+
+    &__contact{
+        margin-bottom: 0.3rem;
+        @include mobile__sub-header;
+    }
+
+    &__email{
+        margin: 0;
+        @include mobile__body-large;
+    }
+
+    &__phone{
+
+        margin-top: 0.5rem;
+        @include mobile__body-large;
+    }
+
+}

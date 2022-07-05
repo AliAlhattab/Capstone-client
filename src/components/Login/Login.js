@@ -37,6 +37,7 @@ class Login extends Component {
         .then((response) => {
           sessionStorage.setItem("token", response.data.token);
           this.setState({ success: true, error: "" });
+          window.location.reload(true);
         })
         .catch((err) => {
           this.setState({ success: false, error: err.response.data });

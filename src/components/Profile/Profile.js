@@ -18,7 +18,7 @@ componentDidMount(){
     }
 
     axios
-        .get('http://localhost:8080/auth/profile', {
+        .get('http://localhost:8080/profile', {
             headers: {
                 Authorization: 'Bearer ' + token
             }
@@ -27,6 +27,7 @@ componentDidMount(){
             this.setState({
                 user: response.data
             });
+            sessionStorage.setItem('user_id', response.data.id)
         })
         .catch(() => {
             this.setState({
@@ -52,19 +53,23 @@ componentDidMount(){
         )
     }
 
-    const { first_name, last_name, username, password} = this.state.user;
+    const { first_name, last_name, username, email, phone} = this.state.user;
 
 
     return (
         <main className="profile">
             <h1 className="profile__title">Profile</h1>
             <p>
-                Welcome back, {first_name} {last_name}! 👋
+               {first_name} {last_name}
             </p>
             <h2>My Profile</h2>
             <p>Username: {username}</p>
-            <p>Email: </p>
-            <p>Phone: </p>
+            <p>Email: {email}</p>
+            <p>Phone: {phone} </p>
+            <h1>Posts</h1>
+            {
+                
+            }
 
         </main>
     );

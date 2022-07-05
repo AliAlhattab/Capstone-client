@@ -1,0 +1,66 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/fonts' as *;
+
+.createpost{
+
+
+    &__container{
+        margin: 0rem 2rem 1rem 2rem;
+    }
+    
+    
+    &__label{
+        padding-bottom: 1rem;
+        @include mobile__labels-links-buttons;
+    
+        @include tablet {
+    
+            @include tablet__labels-links-buttons;
+    
+        }
+      
+    }
+
+    &__text{
+        box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 1rem;
+        height: 100px;
+        padding: 0 16px 0 16px;
+        margin-top: 4px;
+        border-radius: 20px;
+        border: 1px solid $input-outline;
+        resize: none;
+        @include mobile__labels-links-buttons;
+    
+        @include tablet {
+    
+            @include tablet__labels-links-buttons;
+    
+        }
+    }
+
+    &__button{
+        margin-bottom: 1rem;
+        height: 36px;
+        padding: 0 16px;
+        width: 100%;
+        border-radius: 20px;
+        border: none;
+        background-color: $primary-background;
+        color: $form-background;
+        @include mobile__labels-links-buttons;
+    
+        &:hover{
+            background-color: $primary-hover;
+        }
+    
+        @include tablet {
+    
+            @include tablet__labels-links-buttons;
+            
+        }
+    }
+
+}

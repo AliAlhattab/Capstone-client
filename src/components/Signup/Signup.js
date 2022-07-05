@@ -7,10 +7,14 @@ class Signup extends Component {
   state = {
     first_name: "",
     last_name: "",
+    email: "",
+    phone: "",
     username: "",
     password: "",
     first_nameError: false,
     last_nameError: false,
+    emailError: false,
+    phoneError: false,
     usernameError: false,
     passwordError: false,
     success: false,
@@ -34,6 +38,13 @@ class Signup extends Component {
       this.setState({ last_nameError: true });
     }
 
+    if (!this.state.email) {
+      this.setState({ emailError: true });
+    }
+    if (!this.state.phone) {
+      this.setState({ phoneError: true });
+    }
+
     if (!this.state.username) {
       this.setState({ usernameError: true });
     }
@@ -45,6 +56,8 @@ class Signup extends Component {
         .post("http://localhost:8080/auth/signup", {
           first_name: this.state.first_name,
           last_name: this.state.last_name,
+          email: this.state.email,
+          phone: this.state.phone,
           username: this.state.username,
           password: this.state.password,
         })
@@ -86,6 +99,30 @@ class Signup extends Component {
               name="last_name"
               type="text"
               placeholder="Last Name"
+            />
+
+            <label className="signup__label">Email</label>
+            <input
+              className={`signup__input ${
+                this.state.emailError ? "signup__input-error" : ""
+              }`}
+              onChange={this.changeHandler}
+              id="email"
+              name="email"
+              type="text"
+              placeholder="Email"
+            />
+
+            <label className="signup__label">Phone</label>
+            <input
+              className={`signup__input ${
+                this.state.phoneError ? "signup__input-error" : ""
+              }`}
+              onChange={this.changeHandler}
+              id="phone"
+              name="phone"
+              type="text"
+              placeholder="Phone"
             />
 
             <label className="signup__label">Username</label>
