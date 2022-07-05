@@ -1,9 +1,9 @@
 import React from 'react'
 import Profile from '../components/Profile/Profile'
 
-function ProfilePage() {
+function ProfilePage({match:{params:{id}}}) {
   return (
-    <Profile/>
+    <Profile id={id}/>
   )
 }
 

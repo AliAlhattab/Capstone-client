@@ -19,7 +19,8 @@ function App() {
         <Route path='/signup' component={SignupPage}/>
         {token != undefined ? <Redirect from='/login' to='/profile'/> : ''}
         <Route path='/login' component={LoginPage}/>
-        <Route path='/profile' component={ProfilePage}/>
+        <Route path='/profile' exact component={ProfilePage}/>
+        <Route path='/profile/:id' render={(rProps) => {return <ProfilePage {...rProps}/>}}/>
         <Route path='/posts' component={PostsPage}/>
       </Switch>
     </BrowserRouter>

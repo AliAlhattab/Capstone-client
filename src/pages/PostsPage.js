@@ -14,6 +14,7 @@ class PostsPage extends Component {
   }
 
   render() {
+
     return (
       <section className="postpage">
         <div className="postpage__container">
@@ -33,9 +34,11 @@ class PostsPage extends Component {
     axios
       .get("http://localhost:8080/posts")
       .then((posts) => {
+
         this.setState({
           posts: posts.data,
         });
+
       })
       .catch((err) => {
         console.log("Error fetching posts: ", err);
