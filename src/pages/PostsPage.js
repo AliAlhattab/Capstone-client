@@ -9,11 +9,14 @@ class PostsPage extends Component {
     posts: [],
   };
 
+  
+
   componentDidMount() {
     this.fetchPosts();
   }
 
   render() {
+    
 
     return (
       <section className="postpage">
@@ -23,7 +26,8 @@ class PostsPage extends Component {
         <CreatePost onPostCreate={this.fetchPosts} />
 
         {this.state.posts.map((post) => (
-          <Posts key={post.id} post={post} />
+
+          <Posts key={post.post_id} post={post} />
         ))}
         </div>
       </section>
@@ -35,9 +39,17 @@ class PostsPage extends Component {
       .get("http://localhost:8080/posts")
       .then((posts) => {
 
+        const postOrder = posts.data;
+
+       const sorted = postOrder.sort((a, b) => {
+          return b.updated_at - a.updated_at;
+      });
+
         this.setState({
-          posts: posts.data,
+          posts: sorted
         });
+
+      
 
       })
       .catch((err) => {

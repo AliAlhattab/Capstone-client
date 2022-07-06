@@ -101,7 +101,6 @@ class Profile extends Component {
           },
         })
         .then((response) => {
-          console.log('this is line 91 ', response);
           this.setState({
             posts: response.data
           });

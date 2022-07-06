@@ -1,5 +1,6 @@
 import React from 'react'
 import './Posts.scss'
+import { NavLink } from 'react-router-dom'
 
 function Posts({ post }) {
 
@@ -7,7 +8,7 @@ function Posts({ post }) {
   let date = new Date(time);
 
   return (
-    <article className='post'>
+    <NavLink className='post__link' to={'/profile/' + post.user_id}><article className='post'>
         <div className='post__group'>
         <h3 className='post__name'>{post.first_name} {post.last_name}</h3>
         <p className='post__date'>{date.toLocaleDateString()}</p>
@@ -18,7 +19,7 @@ function Posts({ post }) {
         <p className='post__email'>Email: {post.email}</p>
         <p className='post__phone'>Phone: {post.phone}</p>
         </div>
-    </article>
+    </article></NavLink>
   )
 }
 
