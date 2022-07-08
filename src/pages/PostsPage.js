@@ -4,6 +4,8 @@ import axios from "axios";
 import CreatePost from "../components/CreatePost/CreatePost";
 import './PostsPage.scss'
 
+sessionStorage.getItem("user_id");
+
 class PostsPage extends Component {
   state = {
     posts: [],
@@ -26,27 +28,35 @@ class PostsPage extends Component {
         <CreatePost onPostCreate={this.fetchPosts} />
 
         {this.state.posts.map((post) => (
-
-          <Posts key={post.post_id} post={post} />
+         
+          <Posts key={post.post_id} post={post} del={this.deletePost}/>
+          
         ))}
+        
         </div>
       </section>
     );
   }
+
+  deletePost = (id) => {
+    axios
+      .delete(`http://localhost:8080/posts/` + id)
+      .then(response =>{
+        this.fetchPosts()
+      })
+      .catch(err =>{
+        
+      })
+    }      
 
   fetchPosts = () => {
     axios
       .get("http://localhost:8080/posts")
       .then((posts) => {
 
-        const postOrder = posts.data;
-
-       const sorted = postOrder.sort((a, b) => {
-          return b.updated_at - a.updated_at;
-      });
-
+        const post = posts.data;
         this.setState({
-          posts: sorted
+          posts: post
         });
 
       

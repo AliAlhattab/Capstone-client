@@ -53,5 +53,7 @@
         margin-top: 0.5rem;
         @include mobile__body-large;
     }
-
+    &__delete{
+        width: 20px;
+    }
 }

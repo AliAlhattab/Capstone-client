@@ -7,10 +7,13 @@ class Nav extends Component {
   state = {
     failedAuth: false,
     user: null,
+    id: sessionStorage.getItem('user_id')
   };
+
 
   componentDidMount() {
     const token = sessionStorage.getItem("token");
+    
 
     if (!token) {
       this.setState({ failedAuth: true });
@@ -70,7 +73,7 @@ class Nav extends Component {
           <h1 className="nav__title">WeDevelop</h1>
         </NavLink>
         <ul className="nav__list">
-          <NavLink className="nav__links" to="/profile">
+          <NavLink className="nav__links" to={`/profile/`}>
             <li className="nav__options">Profile</li>
           </NavLink>
           <NavLink className="nav__links" to="/posts">

@@ -2,8 +2,11 @@ import { Component } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import picture from "../../assets/images/default_picture.jpg";
-import './Profile.scss'
+import "./Profile.scss";
 import CreatePost from "../CreatePost/CreatePost";
+import icon from "../../assets/images/garabage.png";
+
+const userId = sessionStorage.getItem("user_id");
 
 class Profile extends Component {
   state = {
@@ -12,15 +15,21 @@ class Profile extends Component {
     failedAuth: false,
   };
 
+  deletePost = (id) => {
+    axios
+      .delete(`http://localhost:8080/posts/` + id)
+      .then((response) => {
+        this.fetchPosts();
+      })
+      .catch((err) => {});
+  };
   fetchPosts = () => {
     axios
       .get("http://localhost:8080/posts")
       .then((posts) => {
-
         this.setState({
           posts: posts.data,
         });
-
       })
       .catch((err) => {
         console.log("Error fetching posts: ", err);
@@ -29,13 +38,13 @@ class Profile extends Component {
 
   logout = () => {
     sessionStorage.removeItem("token");
-    sessionStorage.removeItem('user_id');
+    sessionStorage.removeItem("user_id");
     window.location.reload(true);
 
     this.setState({
       user: null,
-      failedAuth: true
-    })
+      failedAuth: true,
+    });
   };
 
   componentDidMount() {
@@ -56,7 +65,7 @@ class Profile extends Component {
           this.setState({
             user: response.data[0],
           });
-          sessionStorage.setItem("user_id", response.data.id);
+          console.log(response.data[0])
         })
         .catch(() => {
           this.setState({
@@ -72,10 +81,9 @@ class Profile extends Component {
         })
         .then((response) => {
           this.setState({
-            posts: response.data
+            posts: response.data,
           });
-          
-          sessionStorage.setItem("user_id", response.data.id);
+          console.log(response.data.id)
         })
         .catch(() => {
           this.setState({
@@ -95,35 +103,71 @@ class Profile extends Component {
           });
           sessionStorage.setItem("user_id", response.data.id);
           axios
-        .get("http://localhost:8080/posts/" + response.data.id, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        })
-        .then((response) => {
-          this.setState({
-            posts: response.data
-          });
-          
+            .get("http://localhost:8080/posts/" + response.data.id, {
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            })
+            .then((response) => {
+              this.setState({
+                posts: response.data,
+              });
+            })
+            .catch(() => {
+              this.setState({
+                failedAuth: true,
+              });
+            });
         })
         .catch(() => {
           this.setState({
             failedAuth: true,
           });
         });
-        })
-        .catch(() => {
-          this.setState({
-            failedAuth: true,
-          });
-        });
+    }
+  }
 
-         
+  componentDidUpdate(prevProp, prevState) {
+    const token = sessionStorage.getItem("token");
+    if(this.props.id !== prevProp.id && this.props.id === undefined){
+      axios
+      .get("http://localhost:8080/profile", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        this.setState({
+          user: response.data,
+        });
+        console.log('response', response.data)
+        sessionStorage.setItem("user_id", response.data.id);
+        axios
+          .get("http://localhost:8080/posts/" + response.data.id, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then((response) => {
+            this.setState({
+              posts: response.data,
+            });
+          })
+          .catch(() => {
+            this.setState({
+              failedAuth: true,
+            });
+          });
+      })
+      .catch(() => {
+        this.setState({
+          failedAuth: true,
+        });
+      });
     }
   }
 
   render() {
-   
     if (this.state.failedAuth) {
       return (
         <div className="profile">
@@ -143,7 +187,7 @@ class Profile extends Component {
       );
     }
 
-    const { first_name, last_name, username, email, phone } = this.state.user;
+    const { first_name, last_name, username, email, phone, id } = this.state.user;
     return (
       <section className="profile">
         <div className="profile__container">
@@ -166,41 +210,55 @@ class Profile extends Component {
             <p className="profile__info">Email: {email}</p>
             <p className="profile__info">Phone: {phone}</p>
           </div>
-            <div className="profile__post">
-          <h1 className="postpage__title">Posts</h1>
-          <CreatePost onPostCreate={this.fetchPosts}/>
-          
-          { this.state.posts.map(post => (
+          <div className="profile__post">
+            <h1 className="postpage__title">Posts</h1>
+            { userId == id ? <CreatePost onPostCreate={this.fetchPosts}/>  : '' } 
 
+            {this.state.posts.map((post) => (
+              <div className="profile__post-container" key={post.post_id}>
+                <div className="post__group">
+                  <h3 className="post__name">
+                    {post.first_name} {post.last_name}
+                  </h3>
+                  <p className="post__date">
+                    {new Date(post.updated_at).toLocaleDateString()}{" "}
+                    {userId == id ? (
+                      <img
+                        className="post__delete"
+                        onClick={() => {
+                          this.deletePost(post.post_id);
+                        }}
+                        src={icon}
+                        alt="delete icon"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </p>
+                </div>
 
-            <div className="profile__post-container" key={post.post_id}>
-            <div className="post__group">
-              <h3 className="post__name">
-                {first_name} {last_name}
-              </h3>
-              <p className="post__date">{new Date(post.updated_at).toLocaleDateString()}</p>
-            </div>
-            
-                <p className="post__content">{post.content}</p>
-            <div className="post__info">
-              <p className="post__contact">Contact Info</p>
-              <p className="post__email">Email: {email}</p>
-              <p className="post__phone">Phone: {phone}</p>
-            </div>
-            </div>
-          ))
-            
-     }
-          
-          <NavLink className="nav__links" to="/">
-            <button className="profile__logout" onClick={this.logout}>Logout</button>
-          </NavLink>
+                <p className="post__content">
+                  <strong>Website Type</strong>: {post.website}
+                </p>
+                <p className="post__content">
+                  <strong>Description</strong>: {post.content}
+                </p>
+                <div className="post__info">
+                  <p className="post__contact">Contact Info</p>
+                  <p className="post__email">Email: {email}</p>
+                  <p className="post__phone">Phone: {phone}</p>
+                </div>
+              </div>
+            ))}
+
+            <NavLink className="nav__links" to="/">
+              <button className="profile__logout" onClick={this.logout}>
+                Logout
+              </button>
+            </NavLink>
+          </div>
         </div>
-        
-        </div>
-        
       </section>
-      
     );
   }
 }

@@ -4,6 +4,7 @@ import './CreatePost.scss'
 
 class CreatePost extends Component {
   state = {
+    website: '',
     content: "",
     error: "",
   };
@@ -21,6 +22,7 @@ class CreatePost extends Component {
     axios
       .post("http://localhost:8080/posts", 
       { 
+        website: this.state.website,
         content: this.state.content,
         user_id: id
      })
@@ -37,14 +39,27 @@ class CreatePost extends Component {
   render() {
     return (
         <section className="createpost">
+          
       <form className="createpost__container" onSubmit={this.submit}>
-        <label className="createpost__label">Make a Post</label>
+        <div className="createpost__selector">
+        <label className="createpost__label">Type of Website</label>
+        <select className="createpost_select" name='website' id='website' onChange={this.changeHandler}>
+        <option value=''></option>
+          <option value='eCommerce'>eCommerce</option>
+          <option value='Landing Page'>Landing Page</option>
+          <option value='Portfolio'>Portfolio</option>
+          <option value='Business'>Business</option>
+          <option value='Others'>Others</option>
+        </select>
+        </div>
+
+        <label className="createpost__label">Add a description</label>
         <textarea
           className="createpost__text"
           name="content"
           id="content"
           type="text"
-          placeholder="Make a Post"
+          placeholder="Add a description"
           onChange={this.changeHandler}
         />
         <button className="createpost__button">Post</button>

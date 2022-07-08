@@ -6,6 +6,11 @@
     display: flex;
     justify-content: center;
     background: linear-gradient(0deg, $page-color 90%, $primary-background 90%);
+
+    @include tablet{
+        height: 60vw;
+    }
+   
     
 
     &__container{
