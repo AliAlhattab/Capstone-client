@@ -6,13 +6,8 @@
     display: flex;
     justify-content: center;
     background: linear-gradient(0deg, $page-color 90%, $primary-background 90%);
-
-    @include tablet{
-        height: 60vw;
-    }
    
     
-
     &__container{
         box-shadow: 0 0 4px grey;
         margin: 0rem 2rem 1rem 2rem;
@@ -27,11 +22,7 @@
     &__group{
         margin: 1rem;
     }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> develop
     &__picture{
         background-size: cover;
         border-radius: 50%;

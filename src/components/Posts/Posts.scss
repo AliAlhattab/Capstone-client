@@ -17,7 +17,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 1rem 1rem 0 1rem;
+        margin: 0rem 1rem 0 1rem;
     }
 
     &__name{
@@ -53,7 +53,15 @@
         margin-top: 0.5rem;
         @include mobile__body-large;
     }
-    &__delete{
-        width: 20px;
+
+    &__actions{
+        display: flex;
+        justify-content: flex-end;
     }
+
+    &__icons{
+        width: 15px;
+        padding: 0.5rem;
+    }
+
 }

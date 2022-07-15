@@ -4,7 +4,9 @@ import { NavLink } from "react-router-dom";
 import picture from "../../assets/images/default_picture.jpg";
 import "./Profile.scss";
 import CreatePost from "../CreatePost/CreatePost";
-import icon from "../../assets/images/garabage.png";
+import deleteIcon from "../../assets/images/garabage.png";
+import editIcon from "../../assets/images/edit.png";
+
 
 const userId = sessionStorage.getItem("user_id");
 
@@ -23,9 +25,10 @@ class Profile extends Component {
       })
       .catch((err) => {});
   };
+
   fetchPosts = () => {
     axios
-      .get("http://localhost:8080/posts")
+      .get("http://localhost:8080/posts/" + userId)
       .then((posts) => {
         this.setState({
           posts: posts.data,
@@ -221,19 +224,7 @@ class Profile extends Component {
                     {post.first_name} {post.last_name}
                   </h3>
                   <p className="post__date">
-                    {new Date(post.updated_at).toLocaleDateString()}{" "}
-                    {userId == id ? (
-                      <img
-                        className="post__delete"
-                        onClick={() => {
-                          this.deletePost(post.post_id);
-                        }}
-                        src={icon}
-                        alt="delete icon"
-                      />
-                    ) : (
-                      ""
-                    )}
+                    {new Date(post.updated_at).toLocaleDateString()}
                   </p>
                 </div>
 
@@ -248,6 +239,29 @@ class Profile extends Component {
                   <p className="post__email">Email: {email}</p>
                   <p className="post__phone">Phone: {phone}</p>
                 </div>
+                <div className="post__actions">
+        {userId == id ? (
+         <NavLink to={`/editpost/${post.post_id}`}> <img
+            className="post__icons"
+            src={editIcon}
+            alt="edit"
+          /></NavLink>
+        ) : (
+          ""
+        )}
+        {userId == id ? (
+          <img
+            className="post__icons"
+            onClick={() => {
+             this.deletePost(post.post_id);
+            }}
+            src={deleteIcon}
+            alt="delete icon"
+          />
+        ) : (
+          ""
+        )}
+      </div>
               </div>
             ))}
 
