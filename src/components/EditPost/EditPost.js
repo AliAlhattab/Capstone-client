@@ -9,7 +9,8 @@ class EditPost extends Component {
     content: "",
     error: "",
     id: this.props.match.params.id,
-    success: false
+    success: false,
+    tech: ''
   };
 
   componentDidMount(){
@@ -19,6 +20,7 @@ class EditPost extends Component {
       this.setState({
         website: res.data[0].website,
         content: res.data[0].content,
+        tech: res.data[0].tech
       })
     })
     .catch(err => {
@@ -39,6 +41,7 @@ class EditPost extends Component {
     .put(`http://localhost:8080/posts/${this.state.id}`, {
         website: this.state.website,
         content: this.state.content,
+        tech: this.state.tech,
         success: true
     })
     .then((response) => {
@@ -69,6 +72,17 @@ class EditPost extends Component {
           <option value='Others'>Others</option>
         </select>
         </div>
+
+        <label className="createpost__label">Web Technology</label>
+        <textarea
+          className="createpost__tech"
+          name="tech"
+          id="tech"
+          type="text"
+          placeholder="E.g. HTML, CSS, JavaScript ... "
+          defaultValue={this.state.tech}
+          onChange={this.changeHandler}
+        />
 
         <label className="createpost__label">Add a description</label>
         <textarea

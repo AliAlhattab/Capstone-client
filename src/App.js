@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage';
 import PostsPage from './pages/PostsPage';
 import EditPostPage from './pages/EditPostPage';
 import EditPost from './components/EditPost/EditPost';
+import EditProfile from './components/EditProfile/EditProfile'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Route path='/profile/:id' render={(rProps) => {return <ProfilePage {...rProps}/>}}/>
         <Route path='/posts' component={PostsPage}/>
         <Route path='/editpost/:id' render={(rProps) => {return <EditPost {...rProps}/>}}/>
+        <Route path='/edit/:id' render={(rProps) => {return <EditProfile {...rProps}/>}}/>
       </Switch>
     </BrowserRouter>
   );

@@ -29,6 +29,9 @@ class Posts extends Component{
         <strong>Website Type</strong>: {this.props.post.website}
       </p>
       <p className="post__content">
+        <strong>Web Technology</strong>: {this.props.post.tech}
+      </p>
+      <p className="post__content">
         <strong>Description</strong>: {this.props.post.content}
       </p>
       <div className="post__info">

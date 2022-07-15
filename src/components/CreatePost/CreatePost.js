@@ -6,6 +6,7 @@ class CreatePost extends Component {
   state = {
     website: '',
     content: "",
+    tech: '',
     error: "",
   };
 
@@ -24,6 +25,7 @@ class CreatePost extends Component {
       { 
         website: this.state.website,
         content: this.state.content,
+        tech: this.state.tech,
         user_id: id
      })
       .then((response) => {
@@ -52,6 +54,17 @@ class CreatePost extends Component {
           <option value='Others'>Others</option>
         </select>
         </div>
+        
+        <label className="createpost__label">Web Technology</label>
+        <textarea
+          className="createpost__tech"
+          name="tech"
+          id="tech"
+          type="text"
+          placeholder="E.g. HTML, CSS, JavaScript ... "
+          onChange={this.changeHandler}
+        />
+
 
         <label className="createpost__label">Add a description</label>
         <textarea

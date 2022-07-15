@@ -7,7 +7,6 @@ import CreatePost from "../CreatePost/CreatePost";
 import deleteIcon from "../../assets/images/garabage.png";
 import editIcon from "../../assets/images/edit.png";
 
-
 const userId = sessionStorage.getItem("user_id");
 
 class Profile extends Component {
@@ -68,7 +67,6 @@ class Profile extends Component {
           this.setState({
             user: response.data[0],
           });
-          console.log(response.data[0])
         })
         .catch(() => {
           this.setState({
@@ -86,7 +84,6 @@ class Profile extends Component {
           this.setState({
             posts: response.data,
           });
-          console.log(response.data.id)
         })
         .catch(() => {
           this.setState({
@@ -132,41 +129,40 @@ class Profile extends Component {
 
   componentDidUpdate(prevProp, prevState) {
     const token = sessionStorage.getItem("token");
-    if(this.props.id !== prevProp.id && this.props.id === undefined){
+    if (this.props.id !== prevProp.id && this.props.id === undefined) {
       axios
-      .get("http://localhost:8080/profile", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((response) => {
-        this.setState({
-          user: response.data,
-        });
-        console.log('response', response.data)
-        sessionStorage.setItem("user_id", response.data.id);
-        axios
-          .get("http://localhost:8080/posts/" + response.data.id, {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          })
-          .then((response) => {
-            this.setState({
-              posts: response.data,
-            });
-          })
-          .catch(() => {
-            this.setState({
-              failedAuth: true,
-            });
+        .get("http://localhost:8080/profile", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+        .then((response) => {
+          this.setState({
+            user: response.data,
           });
-      })
-      .catch(() => {
-        this.setState({
-          failedAuth: true,
+          sessionStorage.setItem("user_id", response.data.id);
+          axios
+            .get("http://localhost:8080/posts/" + response.data.id, {
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            })
+            .then((response) => {
+              this.setState({
+                posts: response.data,
+              });
+            })
+            .catch(() => {
+              this.setState({
+                failedAuth: true,
+              });
+            });
+        })
+        .catch(() => {
+          this.setState({
+            failedAuth: true,
+          });
         });
-      });
     }
   }
 
@@ -190,7 +186,8 @@ class Profile extends Component {
       );
     }
 
-    const { first_name, last_name, username, email, phone, id } = this.state.user;
+    const { first_name, last_name, username, email, phone, id, about, linkedin, github} =
+      this.state.user;
     return (
       <section className="profile">
         <div className="profile__container">
@@ -205,17 +202,17 @@ class Profile extends Component {
             <h1 className="profile__title">
               {first_name} {last_name}
             </h1>
+            <h2 className="profile__contacts">About Me</h2>
+            <p className="profile__info">{about}</p>
             <h2 className="profile__contacts">Contacts</h2>
-            <p className="profile__info">Username: {username}</p>
-            <p className="profile__info">
-              Name: {first_name} {last_name}
-            </p>
             <p className="profile__info">Email: {email}</p>
             <p className="profile__info">Phone: {phone}</p>
+            <a href={linkedin}><p className="profile__info">{linkedin}</p></a>
+            <a href={github}><p className="profile__info">{github}</p></a>
           </div>
           <div className="profile__post">
             <h1 className="postpage__title">Posts</h1>
-            { userId == id ? <CreatePost onPostCreate={this.fetchPosts}/>  : '' } 
+            {userId == id ? <CreatePost onPostCreate={this.fetchPosts} /> : ""}
 
             {this.state.posts.map((post) => (
               <div className="profile__post-container" key={post.post_id}>
@@ -232,6 +229,9 @@ class Profile extends Component {
                   <strong>Website Type</strong>: {post.website}
                 </p>
                 <p className="post__content">
+                  <strong>Web Technology</strong>: {post.tech}
+                </p>
+                <p className="post__content">
                   <strong>Description</strong>: {post.content}
                 </p>
                 <div className="post__info">
@@ -240,28 +240,27 @@ class Profile extends Component {
                   <p className="post__phone">Phone: {phone}</p>
                 </div>
                 <div className="post__actions">
-        {userId == id ? (
-         <NavLink to={`/editpost/${post.post_id}`}> <img
-            className="post__icons"
-            src={editIcon}
-            alt="edit"
-          /></NavLink>
-        ) : (
-          ""
-        )}
-        {userId == id ? (
-          <img
-            className="post__icons"
-            onClick={() => {
-             this.deletePost(post.post_id);
-            }}
-            src={deleteIcon}
-            alt="delete icon"
-          />
-        ) : (
-          ""
-        )}
-      </div>
+                  {userId == id ? (
+                    <NavLink to={`/editpost/${post.post_id}`}>
+                      {" "}
+                      <img className="post__icons" src={editIcon} alt="edit" />
+                    </NavLink>
+                  ) : (
+                    ""
+                  )}
+                  {userId == id ? (
+                    <img
+                      className="post__icons"
+                      onClick={() => {
+                        this.deletePost(post.post_id);
+                      }}
+                      src={deleteIcon}
+                      alt="delete icon"
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             ))}
 
@@ -270,6 +269,17 @@ class Profile extends Component {
                 Logout
               </button>
             </NavLink>
+            {userId == id ? (
+            <NavLink to={`/edit/${userId}`}><button className="profile__logout">
+                Edit Profile
+              </button></NavLink>
+            ) : (
+              ''
+            )
+
+                }
+
+          
           </div>
         </div>
       </section>
