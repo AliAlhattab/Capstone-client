@@ -263,12 +263,18 @@ class Profile extends Component {
                 </div>
               </div>
             ))}
-
-            <NavLink className="nav__links" to="/">
+            {userId == id ? (
+              <NavLink className="nav__links" to="/">
               <button className="profile__logout" onClick={this.logout}>
                 Logout
               </button>
             </NavLink>
+
+            )
+          : (
+            ''
+          )}
+            
             {userId == id ? (
             <NavLink to={`/edit/${userId}`}><button className="profile__logout">
                 Edit Profile

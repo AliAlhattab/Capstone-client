@@ -26,7 +26,7 @@ function GetStarted() {
 
       <div className="getstarted__steps">
         <h1 className="getstarted__order">Step 4</h1>
-        <p className="getstarted__text">Find work or developer!</p>
+        <p className="getstarted__text">Find work or a developer!</p>
       </div>
       </div>
 
